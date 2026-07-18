@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>행복한 우리 가족 | Family Space</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="우리 가족만의 소중한 추억과 이야기를 담는 따뜻한 공간입니다.">
+    <meta property="og:title" content="행복한 우리 가족 | Family Space">
+    <meta property="og:description" content="우리 가족만의 소중한 추억과 이야기를 담는 따뜻한 공간입니다.">
+    <meta property="og:type" content="website">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Outfit:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+    <!-- Header & Navigation -->
+    <header class="header">
+        <div class="logo">
+            <span class="logo-icon">💝</span>
+            <span class="logo-text">Family Space</span>
+        </div>
+        <nav class="nav">
+            <a href="#home" class="nav-link active" id="nav-home">Home</a>
+            <a href="#profiles" class="nav-link" id="nav-profiles">가족 소개</a>
+            <a href="#gallery" class="nav-link" id="nav-gallery">추억 갤러리</a>
+            <a href="#calendar" class="nav-link" id="nav-calendar">가족 일정</a>
+            <a href="#guestbook" class="nav-link" id="nav-guestbook">방명록</a>
+        </nav>
+        <button class="theme-toggle" id="themeToggleBtn" aria-label="테마 전환">
+            <span class="toggle-icon">🌙</span>
+        </button>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="hero-bg-overlay"></div>
+        <div class="hero-content">
+            <span class="hero-subtitle">Our Sweet Home</span>
+            <h1 class="hero-title">행복한 우리 가족</h1>
+            <p class="family-motto">"서로 사랑하고 존중하며, 함께하는 모든 순간을 감사히 여기자"</p>
+            <div class="hero-buttons">
+                <a href="#profiles" class="btn btn-primary">가족들 만나기</a>
+                <a href="#gallery" class="btn btn-secondary">추억 보러가기</a>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="mouse">
+                <div class="wheel"></div>
+            </div>
+            <span>아래로 스크롤</span>
+        </div>
+    </section>
+
+    <!-- Profiles Section -->
+    <section id="profiles" class="section profiles-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Members</span>
+                <h2 class="section-title">가족 구성원 소개</h2>
+                <div class="section-divider"></div>
+            </div>
+            <div class="profiles-grid" id="profilesGrid">
+                <!-- Dad Profile -->
+                <div class="profile-card">
+                    <div class="profile-img-container">
+                        <img src="images/dad.jpg" alt="아빠" class="profile-img" onerror="this.src='https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&h=400&q=80'">
+                        <span class="profile-badge">Dad</span>
+                    </div>
+                    <div class="profile-info">
+                        <h3>아빠 (홍길동)</h3>
+                        <p class="profile-role">가족의 든든한 버팀목</p>
+                        <p class="profile-desc">늘 긍정적이고 든든하게 가족을 지켜주시는 아빠. 등산과 요리를 좋아하며 주말마다 특식을 만들어 주십니다.</p>
+                        <div class="profile-tags">
+                            <span class="tag">#캠핑왕</span>
+                            <span class="tag">#가정적</span>
+                            <span class="tag">#요리사</span>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn-like" data-name="dad">
+                                <span class="like-icon">❤️</span> <span class="like-count" id="like-dad">0</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mom Profile -->
+                <div class="profile-card">
+                    <div class="profile-img-container">
+                        <img src="images/mom.jpg" alt="엄마" class="profile-img" onerror="this.src='https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=400&h=400&q=80'">
+                        <span class="profile-badge">Mom</span>
+                    </div>
+                    <div class="profile-info">
+                        <h3>엄마 (김영희)</h3>
+                        <p class="profile-role">따뜻한 사랑의 지휘자</p>
+                        <p class="profile-desc">가족의 모든 일상을 섬세하게 챙겨주시는 천사 같은 엄마. 꽃 가꾸기와 책 읽는 것을 좋아하고 항상 웃음이 가득하십니다.</p>
+                        <div class="profile-tags">
+                            <span class="tag">#꽃꽂이</span>
+                            <span class="tag">#천사엄마</span>
+                            <span class="tag">#독서왕</span>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn-like" data-name="mom">
+                                <span class="like-icon">❤️</span> <span class="like-count" id="like-mom">0</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sister Profile -->
+                <div class="profile-card">
+                    <div class="profile-img-container">
+                        <img src="images/sister.jpg" alt="첫째" class="profile-img" onerror="this.src='https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&h=400&q=80'">
+                        <span class="profile-badge">Sister</span>
+                    </div>
+                    <div class="profile-info">
+                        <h3>딸 (홍하나)</h3>
+                        <p class="profile-role">밝은 에너지 메이커</p>
+                        <p class="profile-desc">디자인을 전공하는 감각적인 첫째. 가족 여행 플래너를 자처하며 언제나 쾌활하고 긍정적인 에너지를 전파합니다.</p>
+                        <div class="profile-tags">
+                            <span class="tag">#디자이너</span>
+                            <span class="tag">#트래블러</span>
+                            <span class="tag">#아이디어왕</span>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn-like" data-name="sister">
+                                <span class="like-icon">❤️</span> <span class="like-count" id="like-sister">0</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pet Profile -->
+                <div class="profile-card">
+                    <div class="profile-img-container">
+                        <img src="images/pet.jpg" alt="초코" class="profile-img" onerror="this.src='https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=400&h=400&q=80'">
+                        <span class="profile-badge">Pet</span>
+                    </div>
+                    <div class="profile-info">
+                        <h3>초코 (반려견)</h3>
+                        <p class="profile-role">가족의 귀염둥이 막내</p>
+                        <p class="profile-desc">올해 3살 된 푸들 초코. 산책과 고구마를 세상에서 가장 좋아하고, 꼬리치기 한 번으로 온 가족을 사르르 녹입니다.</p>
+                        <div class="profile-tags">
+                            <span class="tag">#댕댕이</span>
+                            <span class="tag">#고구마러버</span>
+                            <span class="tag">#애교쟁이</span>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn-like" data-name="pet">
+                                <span class="like-icon">❤️</span> <span class="like-count" id="like-pet">0</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Memory Gallery Section -->
+    <section id="gallery" class="section gallery-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Album</span>
+                <h2 class="section-title">소중한 추억 갤러리</h2>
+                <div class="section-divider"></div>
+            </div>
+            
+            <!-- Gallery Filters -->
+            <div class="gallery-filters">
+                <button class="filter-btn active" data-filter="all">전체보기</button>
+                <button class="filter-btn" data-filter="travel">가족 여행</button>
+                <button class="filter-btn" data-filter="daily">일상</button>
+                <button class="filter-btn" data-filter="party">기념일</button>
+            </div>
+
+            <!-- Gallery Grid -->
+            <div class="gallery-grid" id="galleryGrid">
+                <!-- Item 1 -->
+                <div class="gallery-item" data-category="travel" data-src="images/gallery1.jpg">
+                    <img src="images/gallery1.jpg" alt="가족 여름 여행" class="gallery-img" onerror="this.src='https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&h=450&q=80'">
+                    <div class="gallery-item-overlay">
+                        <h4>여름 제주도 바다</h4>
+                        <p>파란 하늘과 함께했던 우리들의 여름 휴가</p>
+                        <span class="item-date">2025.08.15</span>
+                    </div>
+                </div>
+                <!-- Item 2 -->
+                <div class="gallery-item" data-category="party" data-src="images/gallery2.jpg">
+                    <img src="images/gallery2.jpg" alt="부모님 결혼기념일" class="gallery-img" onerror="this.src='https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=600&h=450&q=80'">
+                    <div class="gallery-item-overlay">
+                        <h4>부모님 결혼 30주년</h4>
+                        <p>가족들이 모두 모여 축하한 행복한 밤</p>
+                        <span class="item-date">2025.10.12</span>
+                    </div>
+                </div>
+                <!-- Item 3 -->
+                <div class="gallery-item" data-category="daily" data-src="images/gallery3.jpg">
+                    <img src="images/gallery3.jpg" alt="주말 한강 소풍" class="gallery-img" onerror="this.src='https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&w=600&h=450&q=80'">
+                    <div class="gallery-item-overlay">
+                        <h4>초코와 주말 한강 나들이</h4>
+                        <p>따뜻한 햇살 아래서 돗자리 펴고 힐링</p>
+                        <span class="item-date">2026.04.18</span>
+                    </div>
+                </div>
+                <!-- Item 4 -->
+                <div class="gallery-item" data-category="travel" data-src="images/gallery4.jpg">
+                    <img src="images/gallery4.jpg" alt="겨울 온천 여행" class="gallery-img" onerror="this.src='https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=600&h=450&q=80'">
+                    <div class="gallery-item-overlay">
+                        <h4>강원도 겨울 설산 여행</h4>
+                        <p>하얗게 눈 덮인 산을 보며 즐기던 따뜻한 차 한 잔</p>
+                        <span class="item-date">2026.01.05</span>
+                    </div>
+                </div>
+                <!-- Item 5 -->
+                <div class="gallery-item" data-category="daily" data-src="images/gallery5.jpg">
+                    <img src="images/gallery5.jpg" alt="주말 베이킹 클래스" class="gallery-img" onerror="this.src='https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&h=450&q=80'">
+                    <div class="gallery-item-overlay">
+                        <h4>아빠의 수제 빵 만들기</h4>
+                        <p>오븐에서 갓 구운 빵 냄새로 가득했던 주말 아침</p>
+                        <span class="item-date">2026.05.30</span>
+                    </div>
+                </div>
+                <!-- Item 6 -->
+                <div class="gallery-item" data-category="party" data-src="images/gallery6.jpg">
+                    <img src="images/gallery6.jpg" alt="초코 생일파티" class="gallery-img" onerror="this.src='https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?auto=format&fit=crop&w=600&h=450&q=80'">
+                    <div class="gallery-item-overlay">
+                        <h4>초코의 3번째 생일</h4>
+                        <p>수제 고구마 케이크와 함께 찰칵!</p>
+                        <span class="item-date">2026.06.14</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Calendar & D-Day Section -->
+    <section id="calendar" class="section calendar-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Anniversaries</span>
+                <h2 class="section-title">가족 기념일 & D-Day</h2>
+                <div class="section-divider"></div>
+            </div>
+
+            <!-- D-Day Showcase -->
+            <div class="dday-container">
+                <div class="dday-card">
+                    <div class="dday-info">
+                        <span class="dday-next-tag">가장 가까운 기념일</span>
+                        <h3 id="nextDDayTitle">엄마 생신</h3>
+                        <p class="dday-date" id="nextDDayDate">2026년 08월 25일</p>
+                    </div>
+                    <div class="dday-countdown">
+                        <span class="dday-number" id="ddayCountdown">D-00</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Event Timeline -->
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">8월 25일</div>
+                    <div class="timeline-content">
+                        <h4>엄마 생신 🎂</h4>
+                        <p>엄마의 소중한 생신 파티! 맛있는 케이크와 선물 준비하기.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">10월 12일</div>
+                    <div class="timeline-content">
+                        <h4>부모님 결혼기념일 💍</h4>
+                        <p>부모님 결혼 31주년 기념. 뜻깊은 가족 저녁 식사 자리 마련.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">11월 20일</div>
+                    <div class="timeline-content">
+                        <h4>아빠 생신 🎉</h4>
+                        <p>아빠를 위한 감사 깜짝 편지와 요리 준비하기.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">12월 25일</div>
+                    <div class="timeline-content">
+                        <h4>크리스마스 홈 파티 🎄</h4>
+                        <p>트리를 예쁘게 꾸미고, 온 가족이 둘러앉아 마니또 선물 교환식 진행.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Guestbook Section (Rolling Paper) -->
+    <section id="guestbook" class="section guestbook-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Rolling Paper</span>
+                <h2 class="section-title">우리들의 방명록</h2>
+                <div class="section-divider"></div>
+            </div>
+
+            <div class="guestbook-container">
+                <!-- Guestbook Form -->
+                <div class="guestbook-form-card">
+                    <h3>사랑하는 마음을 전하세요 ✏️</h3>
+                    <form id="guestbookForm">
+                        <div class="form-group">
+                            <label for="guestName">작성자</label>
+                            <input type="text" id="guestName" placeholder="예: 첫째, 아빠, 귀염둥이" required maxlength="10">
+                        </div>
+                        <div class="form-group">
+                            <label>카드 색상 선택</label>
+                            <div class="color-picker">
+                                <label class="color-option color-pink">
+                                    <input type="radio" name="cardColor" value="pink" checked>
+                                    <span class="color-dot"></span>
+                                </label>
+                                <label class="color-option color-yellow">
+                                    <input type="radio" name="cardColor" value="yellow">
+                                    <span class="color-dot"></span>
+                                </label>
+                                <label class="color-option color-green">
+                                    <input type="radio" name="cardColor" value="green">
+                                    <span class="color-dot"></span>
+                                </label>
+                                <label class="color-option color-blue">
+                                    <input type="radio" name="cardColor" value="blue">
+                                    <span class="color-dot"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="guestMessage">메시지</label>
+                            <textarea id="guestMessage" placeholder="가족에게 전하고 싶은 따뜻한 한마디를 적어보세요." required maxlength="150"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">메시지 남기기 💌</button>
+                    </form>
+                </div>
+
+                <!-- Guestbook Board -->
+                <div class="guestbook-board-container">
+                    <div class="guestbook-board" id="guestbookBoard">
+                        <!-- Post-its will be dynamically rendered here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer-area">
+        <p>© 2026 Our Family Space. Designed for Love.</p>
+        <p class="footer-sub">모든 소중한 순간들이 기록되는 우리 가족만의 공간</p>
+    </footer>
+
+    <!-- Photo Lightbox Modal -->
+    <div class="lightbox" id="lightboxModal">
+        <span class="lightbox-close" id="lightboxClose">&times;</span>
+        <button class="lightbox-prev" id="lightboxPrev" aria-label="이전 사진">&#10094;</button>
+        <div class="lightbox-content-container">
+            <img src="" alt="확대 사진" class="lightbox-img" id="lightboxImg">
+            <div class="lightbox-caption" id="lightboxCaption"></div>
+        </div>
+        <button class="lightbox-next" id="lightboxNext" aria-label="다음 사진">&#10095;</button>
+    </div>
+
+    <!-- Custom JS -->
+    <script src="index.js"></script>
+</body>
+</html>
