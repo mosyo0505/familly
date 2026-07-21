@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>할아버지 & 할머니를 위한 특별한 젠더리빌 🎁💙</title>
+  <meta name="description" content="사랑하는 부모님께 손주의 성별을 깜짝 공개하는 특별한 모바일 웹 애플리케이션">
+  
+  <!-- Open Graph for KakaoTalk / Social Media Sharing -->
+  <meta property="og:title" content="할아버지 & 할머니, 손주 성별이 공개됩니다! 🎁✨">
+  <meta property="og:description" content="두근두근, 과연 공주일까요? 왕자일까요? 눌러서 성별을 확인해보세요!">
+  <meta property="og:image" content="./assets/images/hero.jpg">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Nanum+Pen+Script&family=Pretendard:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Canvas Confetti Library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Ambient Audio Floating Toggle -->
+  <div class="audio-control">
+    <button id="soundToggleBtn" aria-label="사운드 켜기/끄기" class="glass-btn">
+      <span class="icon" id="soundIcon">🎵</span>
+      <span class="label" id="soundLabel">음향 효과 ON</span>
+    </button>
+  </div>
+
+  <!-- Main Container -->
+  <main class="container">
+
+    <!-- HERO SECTION -->
+    <header class="hero-section glass-card">
+      <div class="badge animate-bounce">💌 Grandparent's Special Reveal</div>
+      <h1 class="main-title">할아버지 & 할머니!<br><span class="highlight-gold">손주의 성별</span>을 맞춰보세요 🎁</h1>
+      <p class="subtitle">사랑과 축복 속에 찾아온 우리 아기의 귀여운 비밀!<br>과연 공주일까요, 왕자일까요?</p>
+
+      <div class="hero-image-wrapper">
+        <img src="./assets/images/hero.jpg" alt="젠더리빌 상자" class="hero-img">
+        <div class="hero-sparkles"></div>
+      </div>
+    </header>
+
+    <!-- SECTION 1: PARENTS' VOTE / GUESS -->
+    <section class="section-card glass-card" id="vote-section">
+      <div class="section-header">
+        <span class="step-num">Step 1</span>
+        <h2>부모님의 예측은? 💭</h2>
+        <p>어느 쪽일 것 같으신가요? 마음속으로 끌리는 버튼을 눌러보세요!</p>
+      </div>
+
+      <div class="vote-buttons">
+        <button id="voteGirlBtn" class="vote-btn girl-btn">
+          <div class="vote-avatar">👧🎀</div>
+          <div class="vote-info">
+            <span class="vote-title">예쁜 공주님</span>
+            <span class="vote-sub">핑크빛 드레스 & 리본</span>
+          </div>
+          <span class="vote-badge" id="girlCount">선택하기</span>
+        </button>
+
+        <button id="voteBoyBtn" class="vote-btn boy-btn">
+          <div class="vote-avatar">👦⚽</div>
+          <div class="vote-info">
+            <span class="vote-title">늠름한 왕자님</span>
+            <span class="vote-sub">하늘빛 왕관 & 공</span>
+          </div>
+          <span class="vote-badge" id="boyCount">선택하기</span>
+        </button>
+      </div>
+
+      <div id="voteMessage" class="vote-result-msg hidden"></div>
+    </section>
+
+    <!-- SECTION 2: THE REVEAL EXPERIENCES -->
+    <section class="section-card glass-card" id="reveal-section">
+      <div class="section-header">
+        <span class="step-num">Step 2</span>
+        <h2>성별 공개의 시간! ✨</h2>
+        <p>원하시는 방법으로 성별 상자를 열어보세요.</p>
+      </div>
+
+      <!-- Reveal Mode Selection Tabs -->
+      <div class="mode-tabs">
+        <button class="tab-btn active" data-tab="box-tab">🎁 선물상자 열기</button>
+        <button class="tab-btn" data-tab="balloon-tab">🎈 풍선 터뜨리기</button>
+        <button class="tab-btn" data-tab="scratch-tab">🪙 복권 긁기</button>
+      </div>
+
+      <!-- Tab Content 1: Gift Box Reveal -->
+      <div class="tab-content active" id="box-tab">
+        <div class="box-container">
+          <div class="gift-box-wrapper" id="giftBox">
+            <div class="box-lid">
+              <div class="ribbon-vertical"></div>
+              <div class="ribbon-horizontal"></div>
+              <div class="bow">🎀</div>
+            </div>
+            <div class="box-body">
+              <div class="box-text">터치하여 상자 열기 🎁</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab Content 2: Balloon Pop -->
+      <div class="tab-content" id="balloon-tab">
+        <div class="balloon-container">
+          <p class="instruction">풍선을 3번 바늘로 콕! 콕! 터뜨려주세요 📌</p>
+          <div class="balloon-wrapper" id="balloonTarget">
+            <div class="balloon" id="mainBalloon">
+              <div class="balloon-text">HE or SHE?</div>
+              <div class="balloon-string"></div>
+            </div>
+            <div class="needle" id="needle">📌</div>
+          </div>
+          <div class="pop-progress">
+            <span class="pop-dot" id="dot1"></span>
+            <span class="pop-dot" id="dot2"></span>
+            <span class="pop-dot" id="dot3"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab Content 3: Scratch Card -->
+      <div class="tab-content" id="scratch-tab">
+        <div class="scratch-container">
+          <p class="instruction">동전으로 은색 판을 구석구석 긁어보세요! 🪙</p>
+          <div class="scratch-card-wrapper">
+            <div class="scratch-underlayer" id="scratchUnderlayer">
+              <span class="scratch-hint">소년 왕자님! 👦💙</span>
+            </div>
+            <canvas id="scratchCanvas" width="300" height="200"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GRAND REVEAL RESULT MODAL / HERO DISPLAY (Triggered after reveal) -->
+    <section class="result-section glass-card hidden" id="resultCard">
+      <div class="result-header">
+        <div class="confetti-crown">👑</div>
+        <div class="result-title-badge">GRAND REVEAL</div>
+        <h2 class="result-main-title">축하합니다! ✨<br><span class="boy-blue">건강하고 늠름한 남아가 태어납니다! 👦💙</span></h2>
+        <p class="result-sub">할아버지, 할머니! 저 멋진 왕자님이에요!</p>
+      </div>
+
+      <div class="result-image-card">
+        <img src="./assets/images/boy_celebration.jpg" alt="멋진 baby boy" class="boy-celebration-img">
+        <div class="boy-card-decor">
+          <span class="tag">#멋진손주</span>
+          <span class="tag">#남자아이</span>
+          <span class="tag">#세상의빛</span>
+        </div>
+      </div>
+
+      <!-- Heartfelt Letter from Baby -->
+      <div class="letter-container">
+        <div class="letter-header">💌 손주가 할아버지, 할머니께 드리는 편지</div>
+        <div class="letter-body" id="typingLetter">
+          "할아버지! 할머니! 안녕하세요! 💕<br><br>
+          엄마 아빠의 사랑과 두 분의 은혜 속에서 건강하게 자라고 있는 <b>멋진 남아가 바로 저랍니다!</b> 👶🏻⚽<br><br>
+          곧 씩씩하고 밝은 모습으로 태어나 할아버지, 할머니 안아드릴게요.<br>
+          그때까지 건강하시고 기쁘게 기다려주세요! 사랑해요! ❤️"
+        </div>
+      </div>
+
+      <!-- Replay & Celebrate Button -->
+      <div class="result-actions">
+        <button id="reCelebrateBtn" class="action-btn primary-gold">
+          🎉 축하 폭죽 다시 팡팡!
+        </button>
+        <button id="shareKakaoBtn" class="action-btn secondary-blue">
+          📲 소식 공유하기 (링크 복사)
+        </button>
+      </div>
+    </section>
+
+    <!-- SECTION 3: ULTRASOUND & MOMENTS GALLERY -->
+    <section class="section-card glass-card">
+      <div class="section-header">
+        <span class="step-num">Gallery</span>
+        <h2>아가의 첫 순간들 📸</h2>
+        <p>우리 아기의 기적 같은 순간을 함께 확인해보세요.</p>
+      </div>
+
+      <div class="gallery-grid">
+        <div class="polaroid-card">
+          <div class="polaroid-img-box flex-center">
+            <span class="placeholder-icon">👶🏻</span>
+          </div>
+          <div class="polaroid-caption">
+            <h3>심장 소리 들은 날 💓</h3>
+            <p>쿵쾅쿵쾅 아주 우렁찬 심장 소리</p>
+          </div>
+        </div>
+
+        <div class="polaroid-card">
+          <div class="polaroid-img-box flex-center blue-tint">
+            <span class="placeholder-icon">👟</span>
+          </div>
+          <div class="polaroid-caption">
+            <h3>첫 신발 마련한 날 👟</h3>
+            <p>아장아장 걸을 귀여운 첫 신발</p>
+          </div>
+        </div>
+
+        <div class="polaroid-card">
+          <div class="polaroid-img-box flex-center gold-tint">
+            <span class="placeholder-icon">🧸</span>
+          </div>
+          <div class="polaroid-caption">
+            <h3>손주와의 만남 D-Day ⏳</h3>
+            <p>곧 펼쳐질 우리 가족의 행복</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: GUESTBOOK & BLESSINGS -->
+    <section class="section-card glass-card">
+      <div class="section-header">
+        <span class="step-num">Blessings</span>
+        <h2>손주에게 전하는 덕담 한마디 ✍️</h2>
+        <p>할아버지, 할머니의 사랑이 담긴 축복의 글을 남겨주세요.</p>
+      </div>
+
+      <form id="blessingForm" class="blessing-form">
+        <div class="input-group">
+          <input type="text" id="authorInput" placeholder="작성자 (예: 할아버지 / 외할머니)" required>
+        </div>
+        <div class="input-group">
+          <textarea id="messageInput" rows="3" placeholder="태어날 손주에게 전하고 싶은 따뜻한 말씀..." required></textarea>
+        </div>
+        <button type="submit" class="submit-btn">💌 축복의 메시지 남기기</button>
+      </form>
+
+      <!-- Message List -->
+      <div class="blessing-list" id="blessingList">
+        <!-- Dynamically injected messages -->
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <p>Made with ❤️ for Our Beloved Parents & Grandparents</p>
+      <p class="copyright">© 2026 Gender Reveal Celebration. All rights reserved.</p>
+    </footer>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
