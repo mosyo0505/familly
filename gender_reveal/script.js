@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // Global State
   let soundEnabled = true;
   let isRevealed = false;
-  let popCount = 0;
   let userVote = null;
 
   // Web Audio Context for Sound Effects
@@ -42,18 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
         gain.connect(audioCtx.destination);
         osc.start(now);
         osc.stop(now + 0.08);
-      } else if (type === 'pop') {
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(150, now);
-        osc.frequency.exponentialRampToValueAtTime(40, now + 0.12);
-        gain.gain.setValueAtTime(0.3, now);
-        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.12);
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        osc.start(now);
-        osc.stop(now + 0.12);
       } else if (type === 'fanfare') {
         // Celebratory chord (C Major / F Major progression)
         const notes = [261.63, 329.63, 392.00, 523.25, 659.25, 783.99];
@@ -99,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
     voteGirlBtn.classList.add('selected');
     voteBoyBtn.classList.remove('selected');
     voteMessage.classList.remove('hidden');
-    voteMessage.innerHTML = `💖 <b>"예쁜 공주님일 것 같아요!"</b>라고 예측하셨네요!<br>아래에서 진짜 성별 상자를 열어보세요! 👇`;
+    voteMessage.innerHTML = `💖 <b>"예쁜 공주님일 것 같아요!"</b>라고 예측하셨네요!<br>아래에서 복권을 긁어 진짜 성별을 확인해보세요! 👇`;
   });
 
   voteBoyBtn.addEventListener('click', () => {
@@ -108,66 +95,10 @@ document.addEventListener('DOMContentLoaded', () => {
     voteBoyBtn.classList.add('selected');
     voteGirlBtn.classList.remove('selected');
     voteMessage.classList.remove('hidden');
-    voteMessage.innerHTML = `⚽ <b>"늠름한 왕자님일 것 같아요!"</b>라고 예측하셨네요!<br>아래에서 진짜 성별 상자를 열어보세요! 👇`;
+    voteMessage.innerHTML = `⚽ <b>"늠름한 왕자님일 것 같아요!"</b>라고 예측하셨네요!<br>아래에서 복권을 긁어 진짜 성별을 확인해보세요! 👇`;
   });
 
-  // 2. TAB SWITCHING
-  const tabBtns = document.querySelectorAll('.tab-btn');
-  const tabContents = document.querySelectorAll('.tab-content');
-
-  tabBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      playSound('click');
-      const targetTab = btn.getAttribute('data-tab');
-      
-      tabBtns.forEach(b => b.classList.remove('active'));
-      tabContents.forEach(c => c.classList.remove('active'));
-
-      btn.classList.add('active');
-      document.getElementById(targetTab).classList.add('active');
-
-      if (targetTab === 'scratch-tab') {
-        initScratchCanvas();
-      }
-    });
-  });
-
-  // 3. REVEAL EXPERIENCES
-
-  // (A) Gift Box Reveal
-  const giftBox = document.getElementById('giftBox');
-  giftBox.addEventListener('click', () => {
-    if (isRevealed) return;
-    giftBox.classList.add('opened');
-    triggerGrandReveal('giftBox');
-  });
-
-  // (B) Balloon Pop Reveal
-  const balloonTarget = document.getElementById('balloonTarget');
-  const mainBalloon = document.getElementById('mainBalloon');
-  const dot1 = document.getElementById('dot1');
-  const dot2 = document.getElementById('dot2');
-  const dot3 = document.getElementById('dot3');
-
-  balloonTarget.addEventListener('click', () => {
-    if (isRevealed) return;
-    popCount++;
-    playSound('pop');
-
-    // Wiggle balloon effect
-    mainBalloon.style.transform = `scale(${1 + popCount * 0.08})`;
-
-    if (popCount === 1) dot1.classList.add('active');
-    if (popCount === 2) dot2.classList.add('active');
-
-    if (popCount >= 3) {
-      dot3.classList.add('active');
-      mainBalloon.style.display = 'none';
-      triggerGrandReveal('balloon');
-    }
-  });
-
-  // (C) Scratch Card Canvas
+  // 2. SCRATCH CARD CANVAS
   let canvasInitialized = false;
   function initScratchCanvas() {
     if (canvasInitialized) return;
@@ -187,7 +118,6 @@ document.addEventListener('DOMContentLoaded', () => {
     ctx.fillText('여기를 동전으로 긁어보세요! 🪙', canvas.width / 2, canvas.height / 2 + 5);
 
     let isDrawing = false;
-    let scratchedPixels = 0;
 
     function getBrushPos(xRef, yRef) {
       const rect = canvas.getBoundingClientRect();
@@ -216,7 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const percentage = (clearPixels / (pixels.length / 4)) * 100;
       if (percentage > 45) {
         canvas.style.display = 'none';
-        triggerGrandReveal('scratch');
+        triggerGrandReveal();
       }
     }
 
@@ -231,7 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // GRAND REVEAL TRIGGER FUNCTION
-  function triggerGrandReveal(source) {
+  function triggerGrandReveal() {
     if (isRevealed) return;
     isRevealed = true;
 
@@ -306,81 +236,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // 4. GUESTBOOK / BLESSINGS FUNCTIONALITY
-  const blessingForm = document.getElementById('blessingForm');
-  const blessingList = document.getElementById('blessingList');
-  const authorInput = document.getElementById('authorInput');
-  const messageInput = document.getElementById('messageInput');
-
-  // Initial Sample Messages
-  const defaultBlessings = [
-    {
-      author: '할아버지 👴',
-      message: '사랑하는 우리 첫 손주! 늠름하고 멋진 사나이로 태어나길 기도하마. 씩씩하게 만나자!',
-      time: '방금 전'
-    },
-    {
-      author: '외할머니 👵',
-      message: '복덩이 우리 손주! 엄마 배 속에서 건강히 잘 지내고 얼른 우리품에 와다오. 축복한다!',
-      time: '방금 전'
-    }
-  ];
-
-  function loadBlessings() {
-    const stored = localStorage.getItem('gender_reveal_blessings');
-    const blessings = stored ? JSON.parse(stored) : defaultBlessings;
-    renderBlessings(blessings);
-  }
-
-  function renderBlessings(list) {
-    blessingList.innerHTML = '';
-    list.forEach(item => {
-      const card = document.createElement('div');
-      card.className = 'blessing-item';
-      card.innerHTML = `
-        <div class="blessing-author">${escapeHtml(item.author)}</div>
-        <div class="blessing-content">${escapeHtml(item.message)}</div>
-        <div class="blessing-time">${item.time}</div>
-      `;
-      blessingList.appendChild(card);
-    });
-  }
-
-  blessingForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const author = authorInput.value.trim();
-    const message = messageInput.value.trim();
-
-    if (!author || !message) return;
-
-    playSound('click');
-
-    const stored = localStorage.getItem('gender_reveal_blessings');
-    const blessings = stored ? JSON.parse(stored) : defaultBlessings;
-
-    const newBlessing = {
-      author: author,
-      message: message,
-      time: '방금 전'
-    };
-
-    blessings.unshift(newBlessing);
-    localStorage.setItem('gender_reveal_blessings', JSON.stringify(blessings));
-
-    renderBlessings(blessings);
-
-    authorInput.value = '';
-    messageInput.value = '';
-  });
-
-  function escapeHtml(str) {
-    return str.replace(/&/g, "&amp;")
-              .replace(/</g, "&lt;")
-              .replace(/>/g, "&gt;")
-              .replace(/"/g, "&quot;")
-              .replace(/'/g, "&#039;");
-  }
-
-  // Initialize guestbook
-  loadBlessings();
+  // Initialize Scratch Canvas directly on load
+  initScratchCanvas();
 });
