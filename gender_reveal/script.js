@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
     voteMessage.innerHTML = `⚽ <b>"늠름한 왕자님일 것 같아요!"</b>라고 예측하셨네요!<br>아래에서 복권을 긁어 진짜 성별을 확인해보세요! 👇`;
   });
 
-  // 2. SCRATCH CARD CANVAS
+  // 2. SCRATCH CARD CANVAS (Grid-Based Scratch System for 100% local and mobile webview reliability)
   let canvasInitialized = false;
   function initScratchCanvas() {
     if (canvasInitialized) return;
@@ -119,6 +119,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let isDrawing = false;
 
+    // Grid scratch tracking variables (prevents cross-origin security errors with local file://)
+    const gridCols = 10;
+    const gridRows = 6;
+    const cellWidth = canvas.width / gridCols;
+    const cellHeight = canvas.height / gridRows;
+    const scratchGrid = Array(gridRows).fill().map(() => Array(gridCols).fill(false));
+    let scratchedCellsCount = 0;
+    const totalCells = gridCols * gridRows;
+
     function getBrushPos(xRef, yRef) {
       const rect = canvas.getBoundingClientRect();
       return {
@@ -128,22 +137,40 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function scratch(x, y) {
+      // 1. Draw scratch effect on canvas
       ctx.globalCompositeOperation = 'destination-out';
       ctx.beginPath();
       ctx.arc(x, y, 22, 0, Math.PI * 2, false);
       ctx.fill();
+
+      // 2. Update grid scratched cells
+      const brushRadius = 22;
+      for (let r = 0; r < gridRows; r++) {
+        for (let c = 0; c < gridCols; c++) {
+          if (scratchGrid[r][c]) continue;
+          
+          // Calculate center of grid cell
+          const cellX = c * cellWidth + cellWidth / 2;
+          const cellY = r * cellHeight + cellHeight / 2;
+          
+          // Check if within scratch area
+          const dx = x - cellX;
+          const dy = y - cellY;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          
+          if (dist < brushRadius + 8) {
+            scratchGrid[r][c] = true;
+            scratchedCellsCount++;
+          }
+        }
+      }
+
       checkScratchProgress();
     }
 
     function checkScratchProgress() {
       if (isRevealed) return;
-      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      const pixels = imageData.data;
-      let clearPixels = 0;
-      for (let i = 3; i < pixels.length; i += 4) {
-        if (pixels[i] === 0) clearPixels++;
-      }
-      const percentage = (clearPixels / (pixels.length / 4)) * 100;
+      const percentage = (scratchedCellsCount / totalCells) * 100;
       if (percentage > 45) {
         canvas.style.display = 'none';
         triggerGrandReveal();
@@ -151,12 +178,39 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Touch & Mouse Listeners
-    canvas.addEventListener('mousedown', (e) => { isDrawing = true; const pos = getBrushPos(e.clientX, e.clientY); scratch(pos.x, pos.y); });
-    canvas.addEventListener('mousemove', (e) => { if (isDrawing) { const pos = getBrushPos(e.clientX, e.clientY); scratch(pos.x, pos.y); } });
-    canvas.addEventListener('mouseup', () => { isDrawing = false; });
+    canvas.addEventListener('mousedown', (e) => { 
+      isDrawing = true; 
+      const pos = getBrushPos(e.clientX, e.clientY); 
+      scratch(pos.x, pos.y); 
+    });
 
-    canvas.addEventListener('touchstart', (e) => { isDrawing = true; const touch = e.touches[0]; const pos = getBrushPos(touch.clientX, touch.clientY); scratch(pos.x, pos.y); });
-    canvas.addEventListener('touchmove', (e) => { if (isDrawing) { const touch = e.touches[0]; const pos = getBrushPos(touch.clientX, touch.clientY); scratch(pos.x, pos.y); } });
+    canvas.addEventListener('mousemove', (e) => { 
+      if (isDrawing) { 
+        const pos = getBrushPos(e.clientX, e.clientY); 
+        scratch(pos.x, pos.y); 
+      } 
+    });
+
+    canvas.addEventListener('mouseup', () => { isDrawing = false; });
+    canvas.addEventListener('mouseleave', () => { isDrawing = false; });
+
+    canvas.addEventListener('touchstart', (e) => { 
+      isDrawing = true; 
+      const touch = e.touches[0]; 
+      const pos = getBrushPos(touch.clientX, touch.clientY); 
+      scratch(pos.x, pos.y); 
+      e.preventDefault(); // Prevents page scrolling while scratching
+    }, { passive: false });
+
+    canvas.addEventListener('touchmove', (e) => { 
+      if (isDrawing) { 
+        const touch = e.touches[0]; 
+        const pos = getBrushPos(touch.clientX, touch.clientY); 
+        scratch(pos.x, pos.y); 
+        e.preventDefault();
+      } 
+    }, { passive: false });
+
     canvas.addEventListener('touchend', () => { isDrawing = false; });
   }
 
