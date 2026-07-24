@@ -60,10 +60,14 @@ document.addEventListener('DOMContentLoaded', () => {
       } else if (type === 'lose') {
         const loseAudio = new Audio('./assets/audio/lose.mp3');
         loseAudio.currentTime = 1.0;
-        loseAudio.play();
-        setTimeout(() => {
-          loseAudio.pause();
-        }, 1000);
+        
+        loseAudio.addEventListener('timeupdate', () => {
+          if (loseAudio.currentTime >= 2.0) {
+            loseAudio.pause();
+          }
+        });
+        
+        loseAudio.play().catch(e => console.warn('Audio play failed:', e));
       }
     } catch (e) {
       console.warn('Web Audio error:', e);
