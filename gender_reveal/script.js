@@ -139,6 +139,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function scratch(x, y) {
+      if (!userVote) {
+        alert('먼저 Step 1에서 도담이의 성별을 예측해주세요! 👶');
+        isDrawing = false;
+        return;
+      }
+      
       // 1. Draw scratch effect on canvas
       ctx.globalCompositeOperation = 'destination-out';
       ctx.beginPath();
