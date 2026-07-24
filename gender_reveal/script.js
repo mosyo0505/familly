@@ -68,6 +68,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         
         loseAudio.play().catch(e => console.warn('Audio play failed:', e));
+      } else if (type === 'win') {
+        const winAudio = new Audio('./assets/audio/win.mp3');
+        winAudio.play().catch(e => console.warn('Audio play failed:', e));
       }
     } catch (e) {
       console.warn('Web Audio error:', e);
@@ -241,7 +244,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (userVote === 'girl') {
       playSound('lose');
     } else {
-      playSound('fanfare');
+      playSound('win');
     }
 
     // Launch Confetti Effect
