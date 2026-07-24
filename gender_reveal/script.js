@@ -140,11 +140,11 @@ document.addEventListener('DOMContentLoaded', () => {
       // 1. Draw scratch effect on canvas
       ctx.globalCompositeOperation = 'destination-out';
       ctx.beginPath();
-      ctx.arc(x, y, 22, 0, Math.PI * 2, false);
+      ctx.arc(x, y, 12, 0, Math.PI * 2, false);
       ctx.fill();
 
       // 2. Update grid scratched cells
-      const brushRadius = 22;
+      const brushRadius = 12;
       for (let r = 0; r < gridRows; r++) {
         for (let c = 0; c < gridCols; c++) {
           if (scratchGrid[r][c]) continue;
