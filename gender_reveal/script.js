@@ -8,6 +8,12 @@ document.addEventListener('DOMContentLoaded', () => {
   let isRevealed = false;
   let userVote = null;
 
+  // Preload audio objects globally
+  const loseAudio = new Audio('./assets/audio/lose.mp3');
+  const winAudio = new Audio('./assets/audio/win.mp3');
+  loseAudio.preload = 'auto';
+  winAudio.preload = 'auto';
+
   // Web Audio Context for Sound Effects
   const AudioContext = window.AudioContext || window.webkitAudioContext;
   let audioCtx = null;
@@ -58,18 +64,16 @@ document.addEventListener('DOMContentLoaded', () => {
           osc.stop(now + idx * 0.08 + 1.2);
         });
       } else if (type === 'lose') {
-        const loseAudio = new Audio('./assets/audio/lose.mp3');
         loseAudio.currentTime = 1.0;
-        
-        loseAudio.addEventListener('timeupdate', () => {
+        loseAudio.play().catch(e => console.warn('Audio play failed:', e));
+        loseAudio.addEventListener('timeupdate', function onTimeUpdate() {
           if (loseAudio.currentTime >= 2.0) {
             loseAudio.pause();
+            loseAudio.removeEventListener('timeupdate', onTimeUpdate);
           }
         });
-        
-        loseAudio.play().catch(e => console.warn('Audio play failed:', e));
       } else if (type === 'win') {
-        const winAudio = new Audio('./assets/audio/win.mp3');
+        winAudio.currentTime = 0;
         winAudio.play().catch(e => console.warn('Audio play failed:', e));
       }
     } catch (e) {
@@ -97,6 +101,16 @@ document.addEventListener('DOMContentLoaded', () => {
   voteGirlBtn.addEventListener('click', () => {
     playSound('click');
     userVote = 'girl';
+    
+    // Unlock and preload on mobile interaction
+    loseAudio.load();
+    loseAudio.muted = true;
+    loseAudio.play().then(() => {
+      loseAudio.pause();
+      loseAudio.muted = false;
+      loseAudio.currentTime = 1.0;
+    }).catch(() => {});
+
     voteGirlBtn.classList.add('selected');
     voteBoyBtn.classList.remove('selected');
     voteMessage.classList.remove('hidden');
@@ -106,6 +120,16 @@ document.addEventListener('DOMContentLoaded', () => {
   voteBoyBtn.addEventListener('click', () => {
     playSound('click');
     userVote = 'boy';
+
+    // Unlock and preload on mobile interaction
+    winAudio.load();
+    winAudio.muted = true;
+    winAudio.play().then(() => {
+      winAudio.pause();
+      winAudio.muted = false;
+      winAudio.currentTime = 0;
+    }).catch(() => {});
+
     voteBoyBtn.classList.add('selected');
     voteGirlBtn.classList.remove('selected');
     voteMessage.classList.remove('hidden');
