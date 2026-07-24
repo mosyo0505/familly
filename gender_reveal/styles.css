@@ -231,29 +231,35 @@ body {
 }
 
 .vote-img {
-  width: 70px;
-  height: 70px;
+  width: 100%;
+  max-width: 70px;
+  aspect-ratio: 1 / 1;
+  height: auto;
   border-radius: 50%;
   object-fit: cover;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
   margin-bottom: 4px;
+  flex-shrink: 0;
 }
 
 .vote-info {
   text-align: center;
+  width: 100%;
+  word-break: keep-all;
 }
 
 .vote-title {
   display: block;
   font-weight: 700;
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
 .vote-sub {
   display: block;
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   color: var(--text-muted);
   margin-top: 2px;
+  word-break: keep-all;
 }
 
 .vote-badge {
