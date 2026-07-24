@@ -59,7 +59,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       } else if (type === 'lose') {
         const loseAudio = new Audio('./assets/audio/lose.mp3');
+        loseAudio.currentTime = 1.0;
         loseAudio.play();
+        setTimeout(() => {
+          loseAudio.pause();
+        }, 1000);
       }
     } catch (e) {
       console.warn('Web Audio error:', e);
