@@ -57,6 +57,9 @@ document.addEventListener('DOMContentLoaded', () => {
           osc.start(now + idx * 0.08);
           osc.stop(now + idx * 0.08 + 1.2);
         });
+      } else if (type === 'lose') {
+        const loseAudio = new Audio('./assets/audio/lose.mp3');
+        loseAudio.play();
       }
     } catch (e) {
       console.warn('Web Audio error:', e);
@@ -227,7 +230,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (isRevealed) return;
     isRevealed = true;
 
-    playSound('fanfare');
+    if (userVote === 'girl') {
+      playSound('lose');
+    } else {
+      playSound('fanfare');
+    }
 
     // Launch Confetti Effect
     if (typeof confetti === 'function') {
