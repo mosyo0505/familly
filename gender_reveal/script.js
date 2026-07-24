@@ -64,14 +64,8 @@ document.addEventListener('DOMContentLoaded', () => {
           osc.stop(now + idx * 0.08 + 1.2);
         });
       } else if (type === 'lose') {
-        loseAudio.currentTime = 1.0;
+        loseAudio.currentTime = 0;
         loseAudio.play().catch(e => console.warn('Audio play failed:', e));
-        loseAudio.addEventListener('timeupdate', function onTimeUpdate() {
-          if (loseAudio.currentTime >= 2.0) {
-            loseAudio.pause();
-            loseAudio.removeEventListener('timeupdate', onTimeUpdate);
-          }
-        });
       } else if (type === 'win') {
         winAudio.currentTime = 0;
         winAudio.play().catch(e => console.warn('Audio play failed:', e));
@@ -108,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loseAudio.play().then(() => {
       loseAudio.pause();
       loseAudio.muted = false;
-      loseAudio.currentTime = 1.0;
+      loseAudio.currentTime = 0;
     }).catch(() => {});
 
     voteGirlBtn.classList.add('selected');
