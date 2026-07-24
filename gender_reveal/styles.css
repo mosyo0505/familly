@@ -232,7 +232,7 @@ body {
 
 .vote-img {
   width: 100%;
-  max-width: 70px;
+  max-width: 110px;
   aspect-ratio: 1 / 1;
   height: auto;
   border-radius: 50%;
@@ -250,16 +250,12 @@ body {
 
 .vote-title {
   display: block;
-  font-weight: 700;
-  font-size: 1rem;
+  font-weight: 800;
+  font-size: 1.3rem;
 }
 
 .vote-sub {
-  display: block;
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  margin-top: 2px;
-  word-break: keep-all;
+  display: none;
 }
 
 .vote-badge {
