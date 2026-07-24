@@ -93,6 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const voteMessage = document.getElementById('voteMessage');
 
   voteGirlBtn.addEventListener('click', () => {
+    if (isRevealed) return;
     playSound('click');
     userVote = 'girl';
     
@@ -112,6 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   voteBoyBtn.addEventListener('click', () => {
+    if (isRevealed) return;
     playSound('click');
     userVote = 'boy';
 

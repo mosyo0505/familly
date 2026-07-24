@@ -218,13 +218,27 @@ body {
   transform: translateY(-4px);
 }
 
-.girl-btn:hover, .girl-btn.selected {
+@media (hover: hover) {
+  .girl-btn:hover {
+    border-color: var(--girl-pink);
+    background: var(--girl-pink-light);
+    box-shadow: 0 10px 25px rgba(255, 0, 127, 0.15);
+  }
+}
+.girl-btn.selected {
   border-color: var(--girl-pink);
   background: var(--girl-pink-light);
   box-shadow: 0 10px 25px rgba(255, 0, 127, 0.15);
 }
 
-.boy-btn:hover, .boy-btn.selected {
+@media (hover: hover) {
+  .boy-btn:hover {
+    border-color: var(--boy-blue);
+    background: var(--boy-blue-light);
+    box-shadow: 0 10px 25px rgba(58, 134, 255, 0.15);
+  }
+}
+.boy-btn.selected {
   border-color: var(--boy-blue);
   background: var(--boy-blue-light);
   box-shadow: 0 10px 25px rgba(58, 134, 255, 0.15);
