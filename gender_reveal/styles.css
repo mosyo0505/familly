@@ -498,8 +498,9 @@ body {
 
 .scratch-card-wrapper {
   position: relative;
-  width: 300px;
-  height: 180px;
+  width: 340px;
+  height: 220px;
+  max-width: 100%;
   border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 10px 25px rgba(0,0,0,0.12);
@@ -521,7 +522,7 @@ body {
 .scratch-hint {
   font-family: var(--font-serif);
   font-weight: 700;
-  font-size: 1.6rem;
+  font-size: 1.1rem;
   color: var(--boy-blue-dark);
 }
 

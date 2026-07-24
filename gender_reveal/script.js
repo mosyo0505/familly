@@ -130,9 +130,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function getBrushPos(xRef, yRef) {
       const rect = canvas.getBoundingClientRect();
+      const scaleX = canvas.width / rect.width;
+      const scaleY = canvas.height / rect.height;
       return {
-        x: xRef - rect.left,
-        y: yRef - rect.top
+        x: (xRef - rect.left) * scaleX,
+        y: (yRef - rect.top) * scaleY
       };
     }
 
