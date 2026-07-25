@@ -13,9 +13,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const winAudio = new Audio('./assets/audio/win.mp3');
   loseAudio.preload = 'auto';
   winAudio.preload = 'auto';
-  // Keep muted initially to safely unlock on mobile without leaking sound
+  // Keep muted and volume 0 initially to safely unlock on mobile without leaking sound
   loseAudio.muted = true;
+  loseAudio.volume = 0;
   winAudio.muted = true;
+  winAudio.volume = 0;
 
   // Web Audio Context for Sound Effects
   const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -68,10 +70,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       } else if (type === 'lose') {
         loseAudio.muted = false;
+        loseAudio.volume = 1;
         loseAudio.currentTime = 0;
         loseAudio.play().catch(e => console.warn('Audio play failed:', e));
       } else if (type === 'win') {
         winAudio.muted = false;
+        winAudio.volume = 1;
         winAudio.currentTime = 0;
         winAudio.play().catch(e => console.warn('Audio play failed:', e));
       }
@@ -102,8 +106,8 @@ document.addEventListener('DOMContentLoaded', () => {
     playSound('click');
     userVote = 'girl';
     
-    // Unlock and preload on mobile interaction (plays muted)
-    loseAudio.play().then(() => { loseAudio.pause(); }).catch(() => {});
+    // Unlock and preload on mobile interaction (plays silently, no pause to avoid glitches)
+    loseAudio.play().catch(() => {});
 
     voteGirlBtn.classList.add('selected');
     voteBoyBtn.classList.remove('selected');
@@ -116,8 +120,8 @@ document.addEventListener('DOMContentLoaded', () => {
     playSound('click');
     userVote = 'boy';
 
-    // Unlock and preload on mobile interaction (plays muted)
-    winAudio.play().then(() => { winAudio.pause(); }).catch(() => {});
+    // Unlock and preload on mobile interaction (plays silently, no pause to avoid glitches)
+    winAudio.play().catch(() => {});
 
     voteBoyBtn.classList.add('selected');
     voteGirlBtn.classList.remove('selected');
